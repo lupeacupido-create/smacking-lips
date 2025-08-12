@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smacking Lips — Allergy-Friendly Birthday Treats</title>
+  <link rel="stylesheet" href="../smacking-lips-separate/styles.css">
+  <style>
+    /* fallback styles in case stylesheet is blocked */
+    body{font-family:Arial,system-ui;background:#ffd54a;margin:0}
+  </style>
+</head>
+<body>
+  <header><h1 style="padding:16px">Smacking Lips</h1></header>
+  <main style="padding:16px">
+    <section>
+      <h2>Allergy-Friendly Birthday Treats That Give Back!</h2>
+      <img src="../smacking-lips-separate/assets/mockup-hero.png" alt="Candy apples" style="max-width:100%;height:auto">
+    </section>
+
+    <section id="order" style="margin-top:20px;background:#fff;padding:12px;border-radius:10px">
+      <h3>Place an Order</h3>
+      <form id="orderForm">
+        <label>Parent / Contact name
+          <input type="text" name="name" required placeholder="Your name">
+        </label>
+        <label>Email
+          <input type="email" name="email" required placeholder="you@example.com">
+        </label>
+        <label>School name
+          <input type="text" name="school" placeholder="School name">
+        </label>
+        <label>Order details
+          <textarea name="details" placeholder="e.g. 12 sandy apples (red), 10 pretzel rods" required></textarea>
+        </label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <label style="flex:1">Delivery date
+            <input type="date" name="date" required>
+          </label>
+          <label style="flex:1">Pickup or delivery
+            <select name="method">
+              <option>Pickup</option>
+              <option>Delivery</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit">Send Order</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Inline JS so no separate .js download is required -->
+  <script>
+  (function(){
+    function handleOrder(e){
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      var name = data.get('name') || '';
+      var email = data.get('email') || '';
+      var school = data.get('school') || '';
+      var details = data.get('details') || '';
+      var date = data.get('date') || '';
+      var method = data.get('method') || '';
+      var to = 'orders@smackinglips.example'; // TODO: replace with your email
+      var subject = encodeURIComponent('New order from ' + name + ' — ' + school);
+      var body = encodeURIComponent(
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'School: ' + school + '\n' +
+        'Delivery/Pickup: ' + method + '\n' +
+        'Date: ' + date + '\n\n' +
+        'Order details:\n' + details + '\n\n--'
+      );
+      var mailto = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+      window.location.href = mailto;
+      return false;
+    }
+    var f = document.getElementById('orderForm');
+    if (f) f.addEventListener('submit', handleOrder);
+  })();
+  </script>
+</body>
+</html>
